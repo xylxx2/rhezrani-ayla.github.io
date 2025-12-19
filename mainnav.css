@@ -1,0 +1,260 @@
+/* ========================= mainnav.css =========================
+   Styles du header #mainnav UNIQUEMENT
+   Sélecteurs spécifiques pour éviter les conflits
+*/
+
+#mainnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.70);
+  /* Effet verre dépoli moderne supporté par la plupart des navigateurs récents */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.10);
+  /* Transitions multiples pour lisser la sensation de sticky header */
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+#mainnav.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+/* Applique une ombre portée plus diffuse sous l’élément,
+   avec un décalage vertical de 10px, un flou de 30px
+   et une opacité légère pour créer une sensation de profondeur douce */
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+}
+
+#mainnav .mainnav__inner {
+  /* Fonction CSS min() pour limiter la largeur sans media query */
+  width: min(100% - 0px, 1100px);
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* gap natif des flexbox pour gérer l'espacement sans marges manuelles */
+  gap: 14px;
+  transition: margin 200ms ease;
+}
+
+#mainnav.scrolled .mainnav__inner {
+  margin: 0 auto;
+
+}
+
+#mainnav .mainnav__title {
+  /* Définit une police sans-serif avec un poids gras (700), une taille de 0.95rem,
+   une hauteur de ligne de 1.2, et une pile de polices système pour un rendu
+   cohérent, lisible et optimisé selon la plateforme */
+  font: 700 0.95rem/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.88);
+  /* Empêche la sélection du texte ou de l’élément par l’utilisateur,
+   utile pour les boutons, icônes ou éléments purement interactifs */
+  user-select: none;
+  /* Empêche le retour à la ligne automatique et force le texte
+   à rester sur une seule ligne, même s’il dépasse la largeur du conteneur */
+  white-space: nowrap;
+  overflow: hidden;
+  /* Remplace le texte qui dépasse du conteneur par des points de suspension (...),
+   indiquant qu’une partie du contenu est tronquée */
+  text-overflow: ellipsis;
+  max-width: 70vw;
+}
+
+#mainnav .mainnav__burger {
+  /* Supprime le surlignage visuel affiché par défaut lors d’un tap
+   sur les navigateurs WebKit (mobile), pour une interaction plus propre */
+  -webkit-tap-highlight-color: transparent;
+  /* Supprime l’apparence native du navigateur sur l’élément
+   afin de permettre une personnalisation complète via CSS */
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.14);
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Transition combinée qui rend le bouton plus tactile sur mobile */
+  transition: transform 140ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+#mainnav .mainnav__burger:hover {
+  transform: translateY(-1px);
+  /* Applique une ombre portée douce sous l’élément,
+   avec un décalage vertical de 12px, un flou de 26px
+   et une opacité légère pour donner de la profondeur */
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+#mainnav .mainnav__burgerBars {
+  width: 26px;
+  height: 18px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#mainnav .mainnav__bar {
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.85);
+  /* Définit le point d’origine des transformations (rotation, scale, etc.)
+   au centre de l’élément, pour des animations équilibrées */
+  transform-origin: center;
+  /* Transition coordonnée pour préparer l'animation du burger */
+  transition: transform 200ms ease, opacity 200ms ease, width 200ms ease;
+}
+
+/* Animation hover moderne: variations de largeur + micro-décalage */
+#mainnav .mainnav__burger:hover .mainnav__bar:nth-child(1) {
+  width: 90%;
+  /* Déplace l’élément horizontalement de 2 pixels vers la droite
+   sans affecter le flux du document */
+  transform: translateX(2px);
+}
+
+#mainnav .mainnav__burger:hover .mainnav__bar:nth-child(2) {
+  width: 70%;
+  transform: translateX(6px);
+}
+
+#mainnav .mainnav__burger:hover .mainnav__bar:nth-child(3) {
+  width: 85%;
+  transform: translateX(3px);
+}
+
+/* Drawer + overlay */
+#mainnav .mainnav__overlay {
+  position: fixed;
+  /* inset simplifie les 4 offsets pour couvrir tout l'écran */
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  /* Désactive toute interaction de la souris ou du toucher sur l’élément,
+   le rendant transparent aux clics, survols et événements */
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+#mainnav[data-open="true"] .mainnav__overlay {
+  opacity: 1;
+  /* Réactive les interactions de la souris et du toucher sur l’élément,
+   lui permettant de recevoir les clics, survols et autres événements */
+  pointer-events: auto;
+}
+
+#mainnav .mainnav__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  /* width calculée avec min() pour garder un tiroir confortable sur mobile
+  Définit la largeur de l’élément comme la plus petite valeur entre 360px
+   et 92% de la largeur de la fenêtre, garantissant une bonne adaptation
+   aux écrans mobiles et desktop */
+  width: min(360px, 92vw);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(17, 24, 39, 0.10);
+  box-shadow: -18px 0 50px rgba(0, 0, 0, 0.18);
+  transform: translateX(102%);
+  transition: transform 260ms ease;
+  /* Layout en grille pour positionner header / contenu / footer du tiroir */
+  display: grid;
+/* Définit trois lignes dans la grille :
+   une première et une dernière qui s’adaptent à leur contenu (auto),
+   et une ligne centrale qui occupe tout l’espace restant (1fr) */
+grid-template-rows: auto 1fr auto;
+}
+
+#mainnav[data-open="true"] .mainnav__drawer {
+  transform: translateX(0);
+}
+
+#mainnav .mainnav__drawerHeader {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+#mainnav .mainnav__drawerTitle {
+  font: 800 1.05rem/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: -0.01em;
+  color: rgba(17, 24, 39, 0.92);
+}
+
+#mainnav .mainnav__close {
+/* Supprime l’apparence native appliquée par le navigateur à l’élément
+   afin de permettre un style entièrement personnalisé */
+appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.14);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+/* Définit une hauteur de ligne égale à la taille de la police,
+   supprimant l’espace vertical superflu entre les lignes de texte */
+line-height: 1;
+  transition: transform 140ms ease, box-shadow 160ms ease;
+}
+
+#mainnav .mainnav__close:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+
+#mainnav .mainnav__menu {
+  padding: 14px 16px 18px;
+  display: grid;
+  /* gap moderne pour l'espacement vertical des liens */
+  gap: 10px;
+}
+
+#mainnav .mainnav__link {
+  text-decoration: none;
+  color: rgba(17, 24, 39, 0.92);
+  font: 650 1rem/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(17, 24, 39, 0.02);
+  /* Légère animation pour donner du feedback tactile aux liens */
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+#mainnav .mainnav__link:hover {
+  transform: translateX(-2px);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+#mainnav .mainnav__drawerFooter {
+  padding: 14px 16px 18px;
+  border-top: 1px solid rgba(17, 24, 39, 0.10);
+  color: rgba(107, 114, 128, 0.95);
+}
+
+/* Cible les utilisateurs ayant activé la préférence système
+   de réduction des animations, afin d’adapter ou désactiver
+   les effets de mouvement pour plus de confort */
+@media (prefers-reduced-motion: reduce) {
+  /* Media query moderne pour respecter les réglages d'accessibilité */
+  #mainnav,
+  #mainnav * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <!-- Meta viewport moderne pour activer un layout responsive sur mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Article long + MainNav</title>
+
+  <!-- Styles séparés (ordre important : nav isolée puis contenu) -->
+  <link rel="stylesheet" href="mainnav.css" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- L'attribut defer évite de bloquer le rendu initial -->
+  <script defer src="mainnav.js"></script>
+</head>
+<body>
+  <!-- Header demandé, à la racine du body -->
+  <header id="mainnav" aria-label="Navigation principale">
+    <!-- aria-label offre une description accessible du bloc de navigation
+    Les attributs ARIA (Accessible Rich Internet Applications) donnent aux lecteurs d’écran et autres outils d’accessibilité des infos que le HTML seul ne fournit pas toujours : rôle d’un élément, état (ouvert, désactivé…), relations entre composants. 
+    -->
+    <div class="mainnav__inner">
+      <div class="mainnav__title" aria-label="Identité">
+        Ayla / RHEZRANI / 82504472
+      </div>
+
+      <button
+        class="mainnav__burger"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-controls="mainnav-drawer"
+        aria-expanded="false"
+      >
+        <!-- aria-controls & aria-expanded pilotent l'état du menu burger -->
+        <span class="mainnav__burgerBars" aria-hidden="true">
+          <span class="mainnav__bar"></span>
+          <span class="mainnav__bar"></span>
+          <span class="mainnav__bar"></span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Overlay + volet -->
+    <!-- data-mainnav-close + hidden servent au pilotage JS & à l'accessibilité -->
+    <div class="mainnav__overlay" data-mainnav-close tabindex="-1" hidden></div>
+
+    <aside
+      id="mainnav-drawer"
+      class="mainnav__drawer"
+      aria-label="Menu"
+      aria-hidden="true"
+      hidden
+    >
+      <!-- L'élément aside moderne héberge le tiroir de navigation -->
+      <div class="mainnav__drawerHeader">
+        <div class="mainnav__drawerTitle">Menu</div>
+        <button class="mainnav__close" type="button" aria-label="Fermer le menu" data-mainnav-close>
+          ✕
+        </button>
+      </div>
+
+      <nav class="mainnav__menu" aria-label="Liens">
+        <a class="mainnav__link" href="exercice1.html">Exercice 1</a>
+        <a class="mainnav__link" href="exercice2.html">Exercice 2</a>
+        <a class="mainnav__link" href="exercice2bis.html">Exercice 3</a>
+      </nav>
+
+      <div class="mainnav__drawerFooter">
+        <small>Navigation demo</small>
+      </div>
+    </aside>
+  </header>
+
+  <!-- Contenu principal (article long, multi colonnes desktop, responsive mobile) -->
+  <!-- Élément <main> moderne pour encapsuler le contenu majeur -->
+  <main class="page" id="top">
+    <!-- Article sémantique aidé par aria-label -->
+    <article class="article" aria-label="Article principal">
+      <header class="article__header" id="intro">
+        <h1 class="article__title">Le code, c'est difficilé</h1>
+        <p class="article__chapo">
+          Le code, c'est difficile, mais avec un peu d'entraînement je peux y arriver. 
+        </p>
+      </header>
+
+      <!-- Figure + figcaption constituent une paire moderne pour illustrer -->
+      <figure class="article__hero">
+        <!-- loading="lazy" diffère le chargement pour les vues hors écran -->
+        <img
+          src="https://placehold.co/1400x700"
+          alt="Image de couverture"
+          loading="lazy"
+        />
+        <figcaption>Placehold.co, format hero</figcaption>
+      </figure>
+
+      <!-- Section structurant chaque partie de l'article -->
+      <section class="article__body" aria-label="Texte long">
+        <h2>Section I</h2>
+        <p>
+          Le code, ce n’est pas simple, et clairement il y a des moments où on a l’impression que rien ne fonctionne comme prévu
+          (surtout quand on déplace des fichiers et que tout casse, ça ne m'est pas du tou arrivé -.-).
+          Entre les chemins, les liens et les dossiers, j’ai parfois eu l’impression de tourner en rond.
+        </p>
+
+        <p>
+          Mais à force de tester, de corriger et de comprendre mes erreurs, j’ai commencé à mieux saisir comment tout s’articule.
+          Finalement, chaque bug devient une petite victoire quand il est résolu.
+        </p>
+
+        <figure class="article__float article__float--right">
+          <img src="https://placehold.co/600x420" alt="Illustration" loading="lazy" />
+          <figcaption>Image flottante à droite</figcaption>
+        </figure>
+
+        <p>
+          Même si le code peut être frustrant, je reste motivée et déterminée à progresser.
+          Je sais que je ne vais pas tout maîtriser du premier coup, mais j’avance pas à pas,
+          et c’est ça le plus important.
+        </p>
+
+        <p>
+          Avec de la pratique et un peu de persévérance, je suis convaincue que je vais y arriver…
+          et même finir par y prendre du plaisir
+        </p>
+
+        <h2>Section II</h2>
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+          eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+        </p>
+
+        <figure class="article__float article__float--left">
+          <img src="https://placehold.co/520x520" alt="Illustration" loading="lazy" />
+          <figcaption>Image flottante à gauche</figcaption>
+        </figure>
+
+        <p>
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+          corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa.
+        </p>
+
+        <p>
+          Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere
+          possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+        </p>
+
+        <h2 id="galerie">Galerie</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+          Cras mattis consectetur purus sit amet fermentum.
+        </p>
+
+        <!-- aria-label précise le rôle de la galerie -->
+        <div class="article__gallery" aria-label="Galerie d'images">
+          <figure class="article__card">
+            <img src="https://placehold.co/720x520" alt="Image 1" loading="lazy" />
+            <figcaption>Carte 01</figcaption>
+          </figure>
+          <figure class="article__card">
+            <img src="https://placehold.co/720x520" alt="Image 2" loading="lazy" />
+            <figcaption>Carte 02</figcaption>
+          </figure>
+          <figure class="article__card">
+            <img src="https://placehold.co/720x520" alt="Image 3" loading="lazy" />
+            <figcaption>Carte 03</figcaption>
+          </figure>
+          <figure class="article__card">
+            <img src="https://placehold.co/720x520" alt="Image 4" loading="lazy" />
+            <figcaption>Carte 04</figcaption>
+          </figure>
+        </div>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla.
+          Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+          Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+        </p>
+
+        <h2>Section III</h2>
+        <p>
+          Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem
+          eum fugiat quo voluptas nulla pariatur? Sed posuere consectetur est at lobortis.
+        </p>
+
+        <figure class="article__wide">
+          <img src="https://placehold.co/1200x520" alt="Illustration large" loading="lazy" />
+          <figcaption>Illustration large qui traverse la mise en page</figcaption>
+        </figure>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna
+          mollis euismod. Curabitur blandit tempus porttitor.
+        </p>
+
+        <p>
+          Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Maecenas sed diam eget risus varius blandit sit amet non magna.
+        </p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>
+          Finis coronat opus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus.
+          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+        </p>
+      </section>
+
+      <footer class="article__footer">
+        <a class="article__backTop" href="#top">Retour en haut</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
